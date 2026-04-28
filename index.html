@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Überzeit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Überzeit</h1>
+    
+    <!-- Datum Eingabefeld -->
+    <label for="date">Datum:</label>
+    <input type="date" id="date" value="" />
+
+    <!-- Zeit Eingabefeld (nur Stunden und Minuten) -->
+    <label for="time">Zeit (HH:MM):</label>
+    <input type="time" id="time" value="" />
+
+    <!-- Textfeld für Benutzer-Eingabe -->
+    <label for="userText">Grund:</label>
+    <textarea id="userText" rows="4" placeholder="Gib deinen Text hier ein..."></textarea>
+    
+    <!-- Button zum Senden -->
+    <button onclick="sendEmail()">Senden</button>
+
+    <script>
+        // Funktion, die das Datum und die Zeit beim Laden der Seite setzt
+        window.onload = function() {
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+            
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().split('T')[0]; // Datum im Format YYYY-MM-DD
+            const formattedTime = currentDate.toTimeString().split(' ')[0].substring(0, 5); // Zeit im Format HH:MM
+
+            dateInput.value = formattedDate; // Setzt das aktuelle Datum
+            timeInput.value = formattedTime; // Setzt die aktuelle Zeit (HH:MM)
+        };
+
+        // Funktion zum Senden der E-Mail
+        function sendEmail() {
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const userText = document.getElementById('userText').value;
+
+            const subject = 'Überzeit';
+            const body = `Datum: ${date}\nZeit: ${time}\n\nGrund: ${userText}`;
+            const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            window.location.href = mailtoLink; // Öffnet das E-Mail-Programm
+        }
+    </script>
+</body>
+</html>
